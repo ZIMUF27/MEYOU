@@ -1,0 +1,410 @@
+.mission-container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0f3460 0%, #16213e 100%);
+  color: white;
+  padding: 2rem;
+}
+
+.mission-back {
+  margin-bottom: 2rem;
+
+  .btn-back {
+    padding: 0.6rem 1.5rem;
+    background: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+    border: 1px solid #667eea;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+
+    &:hover {
+      background: rgba(102, 126, 234, 0.3);
+      transform: translateX(-3px);
+    }
+  }
+}
+
+.mission-header {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  h1 {
+    font-size: 2.5rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: #b0b8d4;
+    margin: 0;
+  }
+}
+
+.add-mission-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  .btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &.btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+      }
+
+      &.active {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+      }
+    }
+  }
+}
+
+.add-mission-form {
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  animation: slideDown 0.3s ease-out;
+
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #667eea;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: rgba(102, 126, 234, 0.6);
+        background: rgba(102, 126, 234, 0.05);
+        box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+      }
+
+      &::placeholder {
+        color: rgba(176, 184, 212, 0.5);
+      }
+    }
+
+    .form-textarea {
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .form-select {
+      cursor: pointer;
+
+      option {
+        background: #16213e;
+        color: white;
+      }
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+
+    .btn {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+
+      &.btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+      }
+
+      &.btn-secondary {
+        background: transparent;
+        border: 1px solid rgba(102, 126, 234, 0.5);
+        color: #667eea;
+
+        &:hover {
+          border-color: rgba(102, 126, 234, 0.8);
+          background: rgba(102, 126, 234, 0.1);
+        }
+      }
+    }
+  }
+}
+
+.missions-section {
+  max-width: 900px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 2rem;
+    margin: 0 0 2rem 0;
+    color: white;
+  }
+
+  .no-missions {
+    text-align: center;
+    padding: 3rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    border: 2px dashed rgba(102, 126, 234, 0.3);
+    border-radius: 12px;
+
+    p {
+      margin: 0;
+      color: #b0b8d4;
+      font-size: 1.1rem;
+    }
+  }
+
+  .mission-list {
+    display: grid;
+    gap: 1.5rem;
+
+    .mission-item {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: rgba(102, 126, 234, 0.6);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+        transform: translateY(-4px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+      }
+
+      .mission-content {
+        flex: 1;
+
+        .mission-header-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 0.75rem;
+
+          h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: white;
+          }
+
+          .difficulty {
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            text-transform: uppercase;
+
+            &.difficulty-easy {
+              background: rgba(76, 175, 80, 0.2);
+              color: #4caf50;
+            }
+
+            &.difficulty-medium {
+              background: rgba(255, 193, 7, 0.2);
+              color: #ffc107;
+            }
+
+            &.difficulty-hard {
+              background: rgba(244, 67, 54, 0.2);
+              color: #f44336;
+            }
+          }
+        }
+
+        .mission-description {
+          margin: 0 0 1rem 0;
+          color: #b0b8d4;
+          line-height: 1.6;
+        }
+
+        .mission-meta {
+          display: flex;
+          gap: 2rem;
+          margin-bottom: 1rem;
+          font-size: 0.9rem;
+
+          .created-date,
+          .joined-date {
+            color: #90a3b6;
+          }
+
+          .joined-date {
+            color: #4caf50;
+            font-weight: 600;
+          }
+        }
+
+        .mission-footer {
+          .reward {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            font-size: 1rem;
+          }
+        }
+      }
+
+      &.joined {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%);
+        border-color: rgba(76, 175, 80, 0.4);
+      }
+
+      .mission-actions {
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+
+        .btn-join,
+        .btn-leave,
+        .btn-delete {
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 0.9rem;
+          padding: 0.6rem 1.2rem;
+          transition: all 0.3s ease;
+        }
+
+        .btn-join {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+          }
+        }
+
+        .btn-leave {
+          background: rgba(76, 175, 80, 0.2);
+          color: #4caf50;
+          border: 1px solid rgba(76, 175, 80, 0.5);
+
+          &:hover {
+            background: rgba(76, 175, 80, 0.3);
+          }
+        }
+
+        .btn-delete {
+          background: rgba(244, 67, 54, 0.15);
+          color: #f44336;
+          padding: 0.5rem 0.8rem;
+
+          &:hover {
+            background: rgba(244, 67, 54, 0.25);
+            color: #ff5252;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .mission-container {
+    padding: 1rem;
+  }
+
+  .mission-header {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  .add-mission-form {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .missions-section {
+    .mission-item {
+      flex-direction: column;
+
+      .btn-delete {
+        align-self: flex-end;
+      }
+    }
+  }
+}

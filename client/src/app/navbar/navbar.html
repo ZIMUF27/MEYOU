@@ -1,0 +1,18 @@
+<nav class="navbar-container">
+  <div class="logo">The Convergence</div>
+  
+  @if (isLoggedIn) {
+  <div class="user-section" (clickOutside)="closeMenu()">
+    <button class="user-button" (click)="toggleMenu()">
+      <span class="user-icon">👤</span>
+      <span class="username">{{ currentUser?.display_name }}</span>
+    </button>
+    <div class="menu-dropdown" *ngIf="showMenu">
+      <a class="menu-item" routerLink="/error-404" (click)="closeMenu()">Profile</a>
+      <a class="menu-item" routerLink="/logout" (click)="closeMenu()">Logout</a>
+    </div>
+  </div>
+  } @else {
+  <a routerLink="/login" class="login-link">login</a>
+  }
+</nav>

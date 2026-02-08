@@ -1,0 +1,128 @@
+<div class="mission-container">
+  <!-- Back Button -->
+  <div class="mission-back">
+    <button class="btn-back" routerLink="/">← Back to Home</button>
+  </div>
+
+  <!-- Header -->
+  <div class="mission-header">
+    <h1>Missions</h1>
+    <p class="subtitle">Create and manage your missions</p>
+  </div>
+
+  <!-- Add Mission Button -->
+  <div class="add-mission-container">
+    <button 
+      class="btn btn-primary" 
+      (click)="toggleAddForm()"
+      [class.active]="showAddForm"
+    >
+      {{ showAddForm ? '✕ Cancel' : '+ Add Mission' }}
+    </button>
+  </div>
+
+  <!-- Add Mission Form -->
+  @if (showAddForm) {
+    <div class="add-mission-form">
+      <div class="form-group">
+        <label>Mission Title</label>
+        <input 
+          type="text" 
+          [(ngModel)]="newMissionTitle" 
+          placeholder="Enter mission title"
+          class="form-input"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea 
+          [(ngModel)]="newMissionDescription" 
+          placeholder="Enter mission description"
+          class="form-textarea"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Difficulty</label>
+          <select [(ngModel)]="newMissionDifficulty" class="form-select">
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Reward</label>
+          <input 
+            type="text" 
+            [(ngModel)]="newMissionReward" 
+            placeholder="e.g., 250 XP"
+            class="form-input"
+          >
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-secondary" (click)="resetForm()">Cancel</button>
+        <button class="btn btn-primary" (click)="addMission()">Create Mission</button>
+      </div>
+    </div>
+  }
+
+  <!-- Missions List -->
+  <div class="missions-section">
+    <h2>All Missions ({{ missions().length }})</h2>
+    
+    @if (missions().length === 0) {
+      <div class="no-missions">
+        <p>No missions yet. Create your first mission!</p>
+      </div>
+    } @else {
+      <div class="mission-list">
+        @for (mission of missions(); track mission.id) {
+          <div class="mission-item" [class.joined]="mission.joined">
+            <div class="mission-content">
+              <div class="mission-header-row">
+                <h3>{{ mission.title }}</h3>
+                <span class="difficulty" [class]="'difficulty-' + mission.difficulty.toLowerCase()">
+                  {{ mission.difficulty }}
+                </span>
+              </div>
+              <p class="mission-description">{{ mission.description }}</p>
+              <div class="mission-meta">
+                <span class="created-date">Created: {{ formatDate(mission.createdAt) }}</span>
+                @if (mission.joined && mission.joinedAt) {
+                  <span class="joined-date">Joined: {{ formatDate(mission.joinedAt) }}</span>
+                }
+              </div>
+              <div class="mission-footer">
+                <span class="reward">{{ mission.reward }}</span>
+              </div>
+            </div>
+            <div class="mission-actions">
+              <button 
+                [class]="mission.joined ? 'btn-leave' : 'btn-join'"
+                (click)="mission.joined ? leaveMission(mission.id) : joinMission(mission.id)"
+              >
+                {{ mission.joined ? '✓ Joined' : '+ Join' }}
+              </button>
+              @if (mission.joined && isLoggedIn) {
+              <button class="btn-complete" (click)="completeMission(mission.id)">Complete</button>
+              }
+              <button 
+                class="btn-delete" 
+                (click)="deleteMission(mission.id)"
+                title="Delete mission"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

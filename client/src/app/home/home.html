@@ -1,0 +1,58 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">MEANDYOU</h1>
+      <p class="hero-subtitle">Welcome to the ultimate adventure</p>
+      <div class="hero-buttons">
+        @if (!isLoggedIn) {
+          <button class="btn btn-primary" routerLink="/login">Enter the Arena</button>
+        } @else {
+          <button class="btn btn-primary" routerLink="/mission">Start Mission</button>
+        }
+        <button class="btn btn-secondary">Learn More</button>
+      </div>
+    </div>
+    <div class="hero-background"></div>
+  </section>
+
+  <!-- The Convergence Section -->
+  <section class="convergence-section">
+    <div class="convergence-content">
+      <button class="convergence-title-btn" routerLink="/">
+        <h2>The Convergence</h2>
+      </button>
+      <p>Where heroes meet their destiny. Join thousands of players in an epic battle for supremacy.</p>
+      <div class="convergence-stats">
+        <div class="stat-box">
+          <h3>10K+</h3>
+          <p>Active Players</p>
+        </div>
+        <div class="stat-box">
+          <h3>500+</h3>
+          <p>Missions</p>
+        </div>
+        <div class="stat-box">
+          <h3>24/7</h3>
+          <p>Online</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Explore Missions Section -->
+  <section class="explore-section">
+    <h2>Explore Missions</h2>
+    <p>Create and manage your epic missions</p>
+    <button class="btn btn-primary" routerLink="/mission">Go to Missions</button>
+  </section>
+
+  <!-- Login Section -->
+  @if (!isLoggedIn) {
+    <section class="login-section">
+      <h2>Ready to Begin?</h2>
+      <p>Sign in to your account and start your adventure today</p>
+      <button class="btn btn-primary" routerLink="/login">Login</button>
+    </section>
+  }
+</div>
