@@ -1,39 +1,45 @@
-import { Injectable, inject } from '@angular/core';
-import {
-  Auth,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from '@angular/fire/auth';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+﻿import { Injectable, inject } from '@angular/core';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential, signOut, authState, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
   private auth = inject(Auth);
   private firestore = inject(Firestore);
+  private router = inject(Router);
 
-  register(email: string, password: string) {
-    return createUserWithEmailAndPassword(this.auth, email, password);
+  user$ = authState(this.auth);
+
+  constructor() { }
+
+  register(email: string, pass: string): Promise<UserCredential> {
+    return createUserWithEmailAndPassword(this.auth, email, pass);
   }
 
-  login(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password);
+  login(email: string, pass: string): Promise<UserCredential> {
+    return signInWithEmailAndPassword(this.auth, email, pass);
   }
 
-  googleLogin() {
+  loginWithGoogle(): Promise<UserCredential> {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(this.auth, provider);
   }
 
-  createUserProfile(uid: string, email: string, name: string, avatar: string = '') {     
+  logout() {
+    return signOut(this.auth).then(() => {
+        this.router.navigate(['/']);
+    });
+  }
+
+  createUserProfile(uid: string, email: string, role: string = 'user') {
     const userDocRef = doc(this.firestore, `users/${uid}`);
     return setDoc(userDocRef, {
       email,
-      name,
-      avatar,
+      role,
       createdAt: new Date()
     }, { merge: true });
   }

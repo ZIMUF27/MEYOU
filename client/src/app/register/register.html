@@ -1,0 +1,48 @@
+﻿<div class="register-wrapper">
+  <a routerLink="/" class="back-btn">
+    <mat-icon>arrow_back</mat-icon> Back to Home
+  </a>
+  @if (showErrorAlert()) {
+  <div class="error-alert">
+    <span>{{errorFromServer()}}</span>
+    <button mat-icon-button (click)="closeErrorAlert()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  }
+  <div class="auth-container">
+    <div class="auth-card register-section">
+      <h2>SIGN UP</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <div class="form-group">
+          <div class="input-icon"><mat-icon>email</mat-icon></div>
+          <input type="email" formControlName="email" placeholder="E-mail" (input)="updateRegisterErrorMsg('email')">
+        </div>
+        @if (registerForm.controls['email'].invalid && registerForm.controls['email'].touched) {
+          <div class="error-text">{{registerErrorMsg.email()}}</div>
+        }
+
+        <div class="form-group">
+            <div class="input-icon"><mat-icon>lock</mat-icon></div>
+            <input type="password" formControlName="password" placeholder="Password" (input)="updateRegisterErrorMsg('password')">
+        </div>
+        @if (registerForm.controls['password'].invalid && registerForm.controls['password'].touched) {
+            <div class="error-text">{{registerErrorMsg.password()}}</div>
+        }
+
+        <div class="form-group">
+            <div class="input-icon"><mat-icon>lock_outline</mat-icon></div>
+            <input type="password" formControlName="cf_password" placeholder="Confirm Password" (input)="updateRegisterErrorMsg('cf_password')">
+        </div>
+        @if (registerForm.controls['cf_password'].invalid && registerForm.controls['cf_password'].touched) {
+            <div class="error-text">{{registerErrorMsg.cf_password()}}</div>
+        }
+
+        <button type="submit" class="submit-btn register-btn" [disabled]="registerForm.invalid">CREATE ACCOUNT</button>
+        <div class="have-account">
+          Already have an account? <a routerLink="/login" class="link">Login here</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,105 +1,61 @@
-<div class="login-container">
-
-    <!-- Animated Error Alert -->
+﻿<div class="login-wrapper">
+    <!-- Back Button -->
+    <a routerLink="/" class="back-btn">
+        <mat-icon>arrow_back</mat-icon> Back to Home
+    </a>
+    <!-- Error Alert -->
     @if (showErrorAlert()) {
-    <div class="error-alert-popup">
-        <div class="error-alert-content">
-            <div class="error-alert-header">
-                <span class="error-alert-icon">⚠️</span>
-                <h4>Login Failed</h4>
-                <button class="error-alert-close" (click)="closeErrorAlert()">✕</button>
-            </div>
-            <p class="error-alert-message">{{errorFromServer()}}</p>
-        </div>
+    <div class="error-alert">
+        <span>{{errorFromServer()}}</span>
+        <button mat-icon-button (click)="closeErrorAlert()">
+            <mat-icon>close</mat-icon>
+        </button>
     </div>
     }
 
-    <mat-card class="example-card" appearance="outlined">
-        <mat-card-header>
-            <mat-card-title>
-                <h3>{{mode.toLocaleUpperCase()}}</h3>
-            </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <form (ngSubmit)="onSubmit()" [formGroup]="form" autocomplete="off">
-                <!-- Username -->
-                <mat-form-field appearance="outline">
-                    <mat-label>Username</mat-label>
-                    <input matInput type="text" (input)="updateErrorMsg('username')" formControlName="username"
-                        placeholder="type your username here">
-                    @if (form.controls['username'].invalid) {
-                    <mat-error>{{errorMsg.username()}}</mat-error>
-                    }
-                </mat-form-field>
-
-                <!-- Password -->
-                <mat-form-field appearance="outline">
-                    <mat-label>Password</mat-label>
-                    <input matInput type="password" (input)="updateErrorMsg('password')" formControlName="password"
-                        placeholder="type your password here">
-                    @if (form.controls['password'].invalid) {
-                    <mat-error>{{errorMsg.password()}}</mat-error>
-                    }
-                </mat-form-field>
-
-                @if (mode !== 'login') {
-                <!-- Confirm Password -->
-                <mat-form-field appearance="outline">
-                    <mat-label>Confirm Password</mat-label>
-                    <input matInput type="password" (input)="updateErrorMsg('cf_password')"
-                        formControlName="cf_password" placeholder="type your password here">
-                    @if (form.controls['cf_password'].invalid) {
-                    <mat-error>{{errorMsg.cf_password()}}</mat-error>
-                    }
-                </mat-form-field>
-
-                <!-- Display name -->
-                <mat-form-field appearance="outline">
-                    <mat-label>Aka</mat-label>
-                    <input matInput type="text" (input)="updateErrorMsg('displayname')" formControlName="display_name"
-                        placeholder="type your aka here">
-                    @if (form.controls['display_name'].invalid) {
-                    <mat-error>{{errorMsg.displayname()}}</mat-error>
-                    }
-                </mat-form-field>
+    <div class="auth-container">
+        <!-- Login Section -->
+        <div class="auth-card login-section">
+            <div class="user-icon">
+                <mat-icon>person</mat-icon>
+            </div>
+            <h2>LOGIN</h2>
+            
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+                <div class="form-group">
+                    <div class="input-icon"><mat-icon>email</mat-icon></div>
+                    <input type="email" formControlName="email" placeholder="Email" (input)="updateLoginErrorMsg('email')">
+                </div>
+                @if (loginForm.controls['email'].invalid && loginForm.controls['email'].touched) {
+                    <div class="error-text">{{loginErrorMsg.email()}}</div>
                 }
 
-                <button (click)="onSubmit()" type="submit" class="blue" matButton="outlined" [disabled]="!form.valid">
-                    @if(mode==='login'){
-                    Login
-                    }
-                    @if(mode!=='login'){
-                    Get Start
-                    }
+                <div class="form-group">
+                    <div class="input-icon"><mat-icon>lock</mat-icon></div>
+                    <input type="password" formControlName="password" placeholder="Password" (input)="updateLoginErrorMsg('password')">
+                </div>
+                @if (loginForm.controls['password'].invalid && loginForm.controls['password'].touched) {
+                    <div class="error-text">{{loginErrorMsg.password()}}</div>
+                }
+
+                <div class="remember-me">
+                    <mat-checkbox color="primary">Remember me</mat-checkbox>
+                </div>
+                <button type="submit" class="submit-btn login-btn" [disabled]="loginForm.invalid">LOGIN</button>
+                
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <button type="button" class="google-btn-small" (click)="onGoogleLogin()">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo">
+                    <span>Sign in with Google</span>
                 </button>
-                <!-- 
-                //TODO:: Slide 1.Angular P.45
-                -->
+
+                <div class="forgot-password">
+                    <a routerLink="/register">New brawler? sign up</a>
+                </div>
             </form>
-            <div class="login-spacer">or</div>
-            <div>
-                <mat-form-field appearance="outline">
-                    <mat-label>Firebase Email</mat-label>
-                    <input matInput type="email" [(ngModel)]="firebaseEmail" name="firebaseEmail" placeholder="type your email here">
-                </mat-form-field>
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Firebase Password</mat-label>
-                    <input matInput type="password" [(ngModel)]="firebasePassword" name="firebasePassword" placeholder="type your password here">
-                </mat-form-field>
-
-                <button type="button" class="blue" matButton="outlined" (click)="firebaseRegister()">Firebase Register</button>
-                <button type="button" class="blue" matButton="outlined" (click)="firebaseLogin()">Firebase Login</button>
-                <button type="button" class="blue" matButton="outlined" (click)="firebaseGoogleLogin()">Google Login</button>
-            </div>
-            @if (mode === 'login') {
-            <div class="toggle">New to Brawler? <span (click)="toggleMode()">Sign Up</span></div>
-            }
-            @if (mode !== 'login') {
-            <div class="toggle">Already have an account? <span (click)="toggleMode()">Sign In</span></div>
-            }
-        </mat-card-content>
-
-    </mat-card>
+        </div>
+    </div>
 </div>
-
