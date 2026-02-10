@@ -77,6 +77,21 @@
                 -->
             </form>
             <div class="login-spacer">or</div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Firebase Email</mat-label>
+                    <input matInput type="email" [(ngModel)]="firebaseEmail" name="firebaseEmail" placeholder="type your email here">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Firebase Password</mat-label>
+                    <input matInput type="password" [(ngModel)]="firebasePassword" name="firebasePassword" placeholder="type your password here">
+                </mat-form-field>
+
+                <button type="button" class="blue" matButton="outlined" (click)="firebaseRegister()">Firebase Register</button>
+                <button type="button" class="blue" matButton="outlined" (click)="firebaseLogin()">Firebase Login</button>
+                <button type="button" class="blue" matButton="outlined" (click)="firebaseGoogleLogin()">Google Login</button>
+            </div>
             @if (mode === 'login') {
             <div class="toggle">New to Brawler? <span (click)="toggleMode()">Sign Up</span></div>
             }
