@@ -1,4 +1,4 @@
-﻿<div class="login-wrapper">
+<div class="auth-wrapper">
     <!-- Back Button -->
     <a routerLink="/" class="back-btn">
         <mat-icon>arrow_back</mat-icon> Back to Home
@@ -14,13 +14,20 @@
     }
 
     <div class="auth-container">
+        <!-- Decoration Image Section -->
+        <div class="auth-image">
+            <img src="https://cdna.artstation.com/p/assets/images/images/021/455/352/original/pixel-jeff-link-meditation.gif?1571736561" alt="Brawler Meditation">
+            <h2>WELCOME BACK!</h2>
+            <p>Ready for your next mission?</p>
+        </div>
+
         <!-- Login Section -->
         <div class="auth-card login-section">
             <div class="user-icon">
                 <mat-icon>person</mat-icon>
             </div>
             <h2>LOGIN</h2>
-            
+
             <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
                 <div class="form-group">
                     <div class="input-icon"><mat-icon>email</mat-icon></div>
@@ -42,7 +49,7 @@
                     <mat-checkbox color="primary">Remember me</mat-checkbox>
                 </div>
                 <button type="submit" class="submit-btn login-btn" [disabled]="loginForm.invalid">LOGIN</button>
-                
+
                 <div class="divider">
                     <span>OR</span>
                 </div>

@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+﻿import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PassportService } from '../_services/passport-service';
+import { AuthService } from '../_services/auth-service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +11,10 @@ import { PassportService } from '../_services/passport-service';
   styleUrl: './home.scss',
 })
 export class Home {
-  passportService = inject(PassportService);
+  auth = inject(AuthService);
+  user = toSignal(this.auth.user$);
 
   get isLoggedIn(): boolean {
-    return !!this.passportService.data()?.access_token;
+    return !!this.user();
   }
 }

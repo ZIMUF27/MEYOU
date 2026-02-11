@@ -1,0 +1,44 @@
+@import '../../pixel-theme';
+
+.server-error-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.error-image {
+  width: 280px;
+  image-rendering: pixelated;
+  margin-bottom: 3rem;
+  filter: drop-shadow(6px 6px 0 var(--pixel-black));
+}
+
+h1 {
+  font-family: var(--pixel-font-title);
+  font-size: 3rem;
+  color: var(--pixel-primary);
+  margin-bottom: 1rem;
+  text-shadow: 4px 4px 0 var(--pixel-black);
+}
+
+p {
+  color: var(--pixel-tertiary);
+  margin-bottom: 3rem;
+  font-size: 1.2rem;
+  max-width: 500px;
+}
+
+.btn-go-home {
+  @include pixel-button-base;
+  background-color: var(--pixel-primary);
+  color: var(--pixel-white);
+  padding: 15px 30px;
+  font-size: 1rem;
+  
+}

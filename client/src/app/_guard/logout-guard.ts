@@ -1,12 +1,12 @@
-import { CanActivateFn, Router } from '@angular/router';
+﻿import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { PassportService } from '../_services/passport-service';
+import { AuthService } from '../_services/auth-service';
 
 export const logoutGuard: CanActivateFn = (route, state) => {
-  const passportService = inject(PassportService)
-  const router = inject(Router)
+  const auth = inject(AuthService);
+  const router = inject(Router);
 
-  passportService.logout()
-  router.navigate(['/'])
-  return false
+  auth.logout();
+  router.navigate(['/']);
+  return false;
 }

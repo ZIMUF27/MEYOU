@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners } from '@angular/core'
+﻿import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners } from '@angular/core'
 import { provideRouter } from '@angular/router'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
@@ -11,6 +11,7 @@ import { authInterceptor } from './_interceptors/auth-interceptor'
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app'
 import { provideAuth, getAuth } from '@angular/fire/auth'
 import { provideFirestore, getFirestore } from '@angular/fire/firestore'
+import { provideStorage, getStorage } from '@angular/fire/storage'
 import { environment } from '../environments/environment'
 
 export const appConfig: ApplicationConfig = {
@@ -22,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(NgxSpinnerModule),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ]
 }

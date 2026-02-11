@@ -1,3 +1,5 @@
+@import '../../../pixel-theme';
+
 .loading-overlay {
   display: flex;
   flex-direction: column;
@@ -8,28 +10,29 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(var(--pixel-bg), 0.8);
+  backdrop-filter: blur(4px);
   z-index: 9999;
+  font-family: var(--pixel-font-title);
 
-  .spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid rgba(255, 255, 255, 0.3);
-    border-top: 5px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 1rem;
+  .pixel-spinner {
+    width: 60px;
+    height: 60px;
+    background-color: var(--pixel-primary);
+    box-shadow: var(--pixel-border);
+    animation: pixel-jump 0.6s steps(4) infinite;
+    margin-bottom: 2rem;
   }
 
   p {
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 500;
+    color: var(--pixel-white);
+    font-size: 1rem;
+    text-shadow: 2px 2px 0 var(--pixel-black);
+    letter-spacing: 2px;
   }
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes pixel-jump {
+  0%, 100% { transform: translateY(0) scale(1); background-color: var(--pixel-primary); }
+  50% { transform: translateY(-20px) scale(1.1); background-color: var(--pixel-secondary); }
 }

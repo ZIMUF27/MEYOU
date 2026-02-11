@@ -1,19 +1,26 @@
 <div class="home-container">
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1 class="hero-title">MEANDYOU</h1>
-      <p class="hero-subtitle">Welcome to the ultimate adventure</p>
-      <div class="hero-buttons">
-        @if (!isLoggedIn) {
-          <button class="btn btn-primary" routerLink="/login">Enter the Arena</button>
-        } @else {
-          <button class="btn btn-primary" routerLink="/mission">Start Mission</button>
-        }
-        <button class="btn btn-secondary">Learn More</button>
+  <!-- Hero Section with Parallax -->
+  <section class="parallax-container">
+    <div class="parallax-wrapper">
+      <div class="parallax-layer layer-sky"></div>
+      <div class="parallax-layer layer-mountains"></div>
+      <div class="parallax-layer layer-trees"></div>
+      
+      <div class="hero">
+        <div class="hero-content">
+          <h1 class="hero-title">MEANDYOU</h1>
+          <p class="hero-subtitle">Welcome to the ultimate adventure</p>
+          <div class="hero-buttons">
+            @if (!isLoggedIn) {
+              <button class="btn btn-primary" routerLink="/login">Enter the Arena</button>   
+            } @else {
+              <button class="btn btn-primary" routerLink="/mission">Start Mission</button>   
+            }
+            <button class="btn btn-secondary">Learn More</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="hero-background"></div>
   </section>
 
   <!-- The Convergence Section -->
@@ -44,7 +51,7 @@
   <section class="explore-section">
     <h2>Explore Missions</h2>
     <p>Create and manage your epic missions</p>
-    <button class="btn btn-primary" routerLink="/mission">Go to Missions</button>
+    <button class="btn btn-primary" routerLink="/mission">Go to Missions</button>        
   </section>
 
   <!-- Login Section -->

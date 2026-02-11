@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+﻿import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MissionService } from '../_services/mission.service';
-import { PassportService } from '../_services/passport-service';
+import { AuthService } from '../_services/auth-service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-mission',
@@ -13,7 +14,8 @@ import { PassportService } from '../_services/passport-service';
 })
 export class Mission {
   missionService = inject(MissionService);
-  passportService = inject(PassportService);
+  auth = inject(AuthService);
+  user = toSignal(this.auth.user$);
   missions = this.missionService.getMissions();
 
   newMissionTitle = '';
@@ -23,7 +25,7 @@ export class Mission {
   showAddForm = false;
 
   get isLoggedIn(): boolean {
-    return !!this.passportService.data()?.access_token;
+    return !!this.user();
   }
 
   addMission() {
@@ -43,10 +45,11 @@ export class Mission {
   }
 
   completeMission(id: number) {
-    if (this.isLoggedIn) {
+    const u = this.user();
+    if (u) {
       const xp = this.missionService.completeMission(id);
       if (xp > 0) {
-        this.passportService.addXp(xp);
+        this.auth.addXp(u.uid, xp);
       }
     }
   }

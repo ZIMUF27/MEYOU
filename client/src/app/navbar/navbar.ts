@@ -3,7 +3,8 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import { PassportService } from '../_services/passport-service'
+import { AuthService } from '../_services/auth-service'
+import { toSignal } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'app-navbar',
@@ -13,14 +14,16 @@ import { PassportService } from '../_services/passport-service'
 })
 export class Navbar {
   showMenu = false
-  passportService = inject(PassportService)
+  auth = inject(AuthService)
+  user = toSignal(this.auth.user$)
 
   get isLoggedIn(): boolean {
-    return !!this.passportService.data()?.access_token
+    return !!this.user();
   }
 
   get currentUser() {
-    return this.passportService.data()
+    const u = this.user();
+    return u ? { display_name: u.displayName || u.email, ...u } : null;
   }
 
   toggleMenu() {
@@ -29,5 +32,12 @@ export class Navbar {
 
   closeMenu() {
     this.showMenu = false
+  }
+
+  logout() {
+    if (confirm('Are you sure you want to log out of your account?')) {
+      this.auth.logout();
+      this.closeMenu();
+    }
   }
 }

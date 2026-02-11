@@ -1,48 +1,64 @@
-﻿<div class="register-wrapper">
-  <a routerLink="/" class="back-btn">
-    <mat-icon>arrow_back</mat-icon> Back to Home
-  </a>
-  @if (showErrorAlert()) {
-  <div class="error-alert">
-    <span>{{errorFromServer()}}</span>
-    <button mat-icon-button (click)="closeErrorAlert()">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-  }
-  <div class="auth-container">
-    <div class="auth-card register-section">
-      <h2>SIGN UP</h2>
-      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-        <div class="form-group">
-          <div class="input-icon"><mat-icon>email</mat-icon></div>
-          <input type="email" formControlName="email" placeholder="E-mail" (input)="updateRegisterErrorMsg('email')">
-        </div>
-        @if (registerForm.controls['email'].invalid && registerForm.controls['email'].touched) {
-          <div class="error-text">{{registerErrorMsg.email()}}</div>
-        }
-
-        <div class="form-group">
-            <div class="input-icon"><mat-icon>lock</mat-icon></div>
-            <input type="password" formControlName="password" placeholder="Password" (input)="updateRegisterErrorMsg('password')">
-        </div>
-        @if (registerForm.controls['password'].invalid && registerForm.controls['password'].touched) {
-            <div class="error-text">{{registerErrorMsg.password()}}</div>
-        }
-
-        <div class="form-group">
-            <div class="input-icon"><mat-icon>lock_outline</mat-icon></div>
-            <input type="password" formControlName="cf_password" placeholder="Confirm Password" (input)="updateRegisterErrorMsg('cf_password')">
-        </div>
-        @if (registerForm.controls['cf_password'].invalid && registerForm.controls['cf_password'].touched) {
-            <div class="error-text">{{registerErrorMsg.cf_password()}}</div>
-        }
-
-        <button type="submit" class="submit-btn register-btn" [disabled]="registerForm.invalid">CREATE ACCOUNT</button>
-        <div class="have-account">
-          Already have an account? <a routerLink="/login" class="link">Login here</a>
-        </div>
-      </form>
+<div class="auth-wrapper">
+    <!-- Back Button -->
+    <a routerLink="/" class="back-btn">
+        <mat-icon>arrow_back</mat-icon> Back to Home
+    </a>
+    <!-- Error Alert -->
+    @if (showErrorAlert()) {
+    <div class="error-alert">
+        <span>{{errorFromServer()}}</span>
+        <button mat-icon-button (click)="closeErrorAlert()">
+            <mat-icon>close</mat-icon>
+        </button>
     </div>
-  </div>
+    }
+
+    <div class="auth-container">
+        <!-- Decoration Image Section -->
+        <div class="auth-image">
+            <img src="https://cdnb.artstation.com/p/assets/images/images/013/995/579/original/pixel-jeff-shining.gif?1542018244" alt="Brawler Registration">
+            <h2>NEW BRAWLER?</h2>
+            <p>Join the adventure and start your missions!</p>
+        </div>
+
+        <!-- Register Section -->
+        <div class="auth-card register-section">
+            <div class="user-icon">
+                <mat-icon>person_add</mat-icon>
+            </div>
+            <h2>SIGN UP</h2>
+
+            <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+                <div class="form-group">
+                    <div class="input-icon"><mat-icon>email</mat-icon></div>
+                    <input type="email" formControlName="email" placeholder="Email" (input)="updateRegisterErrorMsg('email')">
+                </div>
+                @if (registerForm.controls['email'].invalid && registerForm.controls['email'].touched) {
+                    <div class="error-text">{{registerErrorMsg.email()}}</div>
+                }
+
+                <div class="form-group">
+                    <div class="input-icon"><mat-icon>lock</mat-icon></div>
+                    <input type="password" formControlName="password" placeholder="Password" (input)="updateRegisterErrorMsg('password')">
+                </div>
+                @if (registerForm.controls['password'].invalid && registerForm.controls['password'].touched) {
+                    <div class="error-text">{{registerErrorMsg.password()}}</div>
+                }
+
+                <div class="form-group">
+                    <div class="input-icon"><mat-icon>lock_outline</mat-icon></div>
+                    <input type="password" formControlName="cf_password" placeholder="Confirm Password" (input)="updateRegisterErrorMsg('cf_password')">
+                </div>
+                @if (registerForm.controls['cf_password'].invalid && registerForm.controls['cf_password'].touched) {
+                    <div class="error-text">{{registerErrorMsg.cf_password()}}</div>
+                }
+
+                <button type="submit" class="submit-btn register-btn" [disabled]="registerForm.invalid">CREATE ACCOUNT</button>
+
+                <div class="have-account">
+                    Already have an account? <a routerLink="/login" class="link">Login here</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

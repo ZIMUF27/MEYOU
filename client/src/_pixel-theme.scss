@@ -1,0 +1,66 @@
+/* Pixel Art Theme Variables and Mixins - Bright Game Theme */
+
+:root {
+  --pixel-bg: #87ceeb;         /* Sky Blue Background */
+  --pixel-sky-top: #3498db;    /* Deep Blue Sky */
+  --pixel-sky-mid: #5dade2;    /* Medium Blue Sky */
+  --pixel-sky-bottom: #aed6f1; /* Light Blue Sky */
+  --pixel-primary: #ff4d6d;    /* Vibrant Red/Pink */
+  --pixel-secondary: #4cc9f0;  /* Cyan Blue */
+  --pixel-tertiary: #fee440;   /* Sunshine Yellow */
+  --pixel-accent: #7209b7;     /* Vivid Purple */
+  --pixel-yellow: #fffb96;     /* Light Yellow */
+  --pixel-white: #ffffff;
+  --pixel-black: #000000;
+  --pixel-font-main: 'VT323', monospace;
+  --pixel-font-title: 'Press Start 2P', cursive;
+
+  /* Pixel Border Shadows */
+  --pixel-border:
+    0 -4px 0 0 var(--pixel-black),
+    0 4px 0 0 var(--pixel-black),
+    -4px 0 0 0 var(--pixel-black),
+    4px 0 0 0 var(--pixel-black);
+
+  --pixel-border-white:
+    0 -4px 0 0 var(--pixel-white),
+    0 4px 0 0 var(--pixel-white),
+    -4px 0 0 0 var(--pixel-white),
+    4px 0 0 0 var(--pixel-white);
+
+  --pixel-border-primary:
+    0 -4px 0 0 var(--pixel-primary),
+    0 4px 0 0 var(--pixel-primary),
+    -4px 0 0 0 var(--pixel-primary),
+    4px 0 0 0 var(--pixel-primary);
+}
+
+@mixin pixel-button-base {
+  display: inline-block;
+  position: relative;
+  padding: 12px 24px;
+  margin: 10px;
+  font-family: var(--pixel-font-title);
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--pixel-white);
+  background-color: var(--pixel-primary);
+  box-shadow: var(--pixel-border);
+  cursor: pointer;
+  border: none;
+  transition: all 0.1s;
+  text-shadow: 2px 2px 0px var(--pixel-black);
+  image-rendering: pixelated;
+
+  &:hover {
+    transform: translateY(-4px);
+    background-color: var(--pixel-secondary);
+    color: var(--pixel-black);
+    text-shadow: none;
+  }
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 0 0 var(--pixel-black);
+  }
+}
