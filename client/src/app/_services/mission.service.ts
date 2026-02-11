@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { signal } from '@angular/core';
 
 export interface Mission {
@@ -19,8 +19,8 @@ export class MissionService {
   private missions = signal<Mission[]>([
     {
       id: 1,
-      title: 'The First Mission',
-      description: 'Begin your journey and prove your worth in the arena.',
+      title: 'The First Awakening',
+      description: 'Begin your journey and prove your worth in the arena. Every hero starts somewhere.',
       difficulty: 'Easy',
       reward: '100 XP',
       createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
@@ -28,8 +28,8 @@ export class MissionService {
     },
     {
       id: 2,
-      title: 'Shadow Protocol',
-      description: 'Navigate through darkness and uncover hidden secrets.',
+      title: 'Shadow Protocol: Alpha',
+      description: 'Navigate through darkness and uncover hidden secrets of the digital realm.',
       difficulty: 'Medium',
       reward: '250 XP',
       createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
@@ -37,11 +37,20 @@ export class MissionService {
     },
     {
       id: 3,
-      title: 'The Convergence',
-      description: 'Face the ultimate challenge and unite with allies.',
+      title: 'The Great Convergence',
+      description: 'Face the ultimate challenge and unite with allies to defeat the ancient corruption.',
       difficulty: 'Hard',
       reward: '500 XP',
       createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+      joined: false
+    },
+    {
+      id: 4,
+      title: 'Pixel Harvest',
+      description: 'Collect 50 glowing pixels from the enchanted forest. Watch out for slimes!',
+      difficulty: 'Easy',
+      reward: '75 XP',
+      createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
       joined: false
     }
   ]);

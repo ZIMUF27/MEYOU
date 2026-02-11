@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService, Profile } from '../_services/auth-service';
 import { Router, RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, MatIconModule],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })
@@ -68,7 +69,7 @@ export class ProfileComponent {
     const nameToSave = this.newNickname.trim() || currentName;
 
     if (!nameToSave) {
-        this.uploadMessage.set('กรุณาตั้งชื่อเล่น (Nickname)');
+        this.uploadMessage.set('Please set a nickname.');
         return;
     }
 
@@ -85,7 +86,7 @@ export class ProfileComponent {
           avatarUrl = await this.auth.uploadUserAvatar(uid, this.selectedFile);
         } catch (err: any) {
           console.error('Upload failed:', err);
-          alert('อัปโหลดรูปไม่สำเร็จ (อาจเกิดจาก CORS หรือ Network) จะใช้ข้อมูลส่วนอื่นต่อ');
+          this.uploadMessage.set('Avatar upload failed. Saving other details...');
         }
       }
 
@@ -97,7 +98,7 @@ export class ProfileComponent {
         xp: this.userProfile()?.xp || 0
       });
 
-      this.uploadMessage.set('บันทึกสำเร็จแล้ว!');
+      this.uploadMessage.set('Profile saved successfully!');
 
       // Clear inputs
       this.selectedFile = null;
@@ -105,7 +106,7 @@ export class ProfileComponent {
 
     } catch (error: any) {
       console.error(error);
-      this.uploadMessage.set('เกิดข้อผิดพลาด: ' + error.message);
+      this.uploadMessage.set('Error: ' + error.message);
     } finally {
       this.uploading.set(false);
     }
@@ -122,10 +123,12 @@ export class ProfileComponent {
     if (!timestamp) return 'Unknown';
     // Handle Firestore Timestamp
     if (timestamp.seconds) {
-      return new Date(timestamp.seconds * 1000).toLocaleDateString('th-TH', {
+      return new Date(timestamp.seconds * 1000).toLocaleDateString('en-US', {
         year: 'numeric', month: 'long', day: 'numeric'
       });
     }
-    return new Date(timestamp).toLocaleDateString();
+    return new Date(timestamp).toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
   }
 }

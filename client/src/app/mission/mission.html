@@ -1,128 +1,146 @@
-<div class="mission-container">
-  <!-- Back Button -->
-  <div class="mission-back">
-    <button class="btn-back" routerLink="/">← Back to Home</button>
-  </div>
+﻿<div class="mission-page">
+  <!-- Top Navigation Bar -->
+  <nav class="mission-nav">
+    <button class="btn-pixel btn-back" routerLink="/">
+      <span class="icon">🏠</span> BACK TO HOME
+    </button>
+    <div class="nav-title">QUEST BOARD</div>
+  </nav>
 
-  <!-- Header -->
-  <div class="mission-header">
-    <h1>Missions</h1>
-    <p class="subtitle">Create and manage your missions</p>
-  </div>
+  <!-- Header Section -->
+  <header class="mission-header">
+    <h1 class="pixel-shine">MISSIONS</h1>
+    <div class="header-divider"></div>
+    <p class="subtitle">COMPLETE QUESTS TO EARN XP AND LEVEL UP</p>
+  </header>
 
-  <!-- Add Mission Button -->
-  <div class="add-mission-container">
+  <!-- Add Quest Action -->
+  <section class="action-bar">
     <button 
-      class="btn btn-primary" 
+      class="btn-pixel btn-add-quest" 
       (click)="toggleAddForm()"
       [class.active]="showAddForm"
     >
-      {{ showAddForm ? '✕ Cancel' : '+ Add Mission' }}
+      {{ showAddForm ? '✕ CANCEL' : '+ POST NEW QUEST' }}
     </button>
-  </div>
+  </section>
 
   <!-- Add Mission Form -->
   @if (showAddForm) {
-    <div class="add-mission-form">
-      <div class="form-group">
-        <label>Mission Title</label>
-        <input 
-          type="text" 
-          [(ngModel)]="newMissionTitle" 
-          placeholder="Enter mission title"
-          class="form-input"
-        >
-      </div>
-
-      <div class="form-group">
-        <label>Description</label>
-        <textarea 
-          [(ngModel)]="newMissionDescription" 
-          placeholder="Enter mission description"
-          class="form-textarea"
-          rows="3"
-        ></textarea>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label>Difficulty</label>
-          <select [(ngModel)]="newMissionDifficulty" class="form-select">
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Reward</label>
-          <input 
-            type="text" 
-            [(ngModel)]="newMissionReward" 
-            placeholder="e.g., 250 XP"
-            class="form-input"
-          >
-        </div>
-      </div>
-
-      <div class="form-actions">
-        <button class="btn btn-secondary" (click)="resetForm()">Cancel</button>
-        <button class="btn btn-primary" (click)="addMission()">Create Mission</button>
-      </div>
-    </div>
-  }
-
-  <!-- Missions List -->
-  <div class="missions-section">
-    <h2>All Missions ({{ missions().length }})</h2>
-    
-    @if (missions().length === 0) {
-      <div class="no-missions">
-        <p>No missions yet. Create your first mission!</p>
-      </div>
-    } @else {
-      <div class="mission-list">
-        @for (mission of missions(); track mission.id) {
-          <div class="mission-item" [class.joined]="mission.joined">
-            <div class="mission-content">
-              <div class="mission-header-row">
-                <h3>{{ mission.title }}</h3>
-                <span class="difficulty" [class]="'difficulty-' + mission.difficulty.toLowerCase()">
-                  {{ mission.difficulty }}
-                </span>
-              </div>
-              <p class="mission-description">{{ mission.description }}</p>
-              <div class="mission-meta">
-                <span class="created-date">Created: {{ formatDate(mission.createdAt) }}</span>
-                @if (mission.joined && mission.joinedAt) {
-                  <span class="joined-date">Joined: {{ formatDate(mission.joinedAt) }}</span>
-                }
-              </div>
-              <div class="mission-footer">
-                <span class="reward">{{ mission.reward }}</span>
-              </div>
+    <section class="form-container">
+      <div class="pixel-window">
+        <div class="window-header">NEW QUEST DETAILS</div>
+        <div class="window-content">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label>QUEST TITLE</label>
+              <input 
+                type="text" 
+                [(ngModel)]="newMissionTitle" 
+                placeholder="NAME YOUR ADVENTURE..."
+                class="pixel-input"
+              >
             </div>
-            <div class="mission-actions">
-              <button 
-                [class]="mission.joined ? 'btn-leave' : 'btn-join'"
-                (click)="mission.joined ? leaveMission(mission.id) : joinMission(mission.id)"
+
+            <div class="form-group full-width">
+              <label>DESCRIPTION</label>
+              <textarea 
+                [(ngModel)]="newMissionDescription" 
+                placeholder="WHAT MUST BE DONE?"
+                class="pixel-input"
+                rows="3"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>DIFFICULTY</label>
+              <select [(ngModel)]="newMissionDifficulty" class="pixel-input">
+                <option value="Easy">🟢 EASY</option>
+                <option value="Medium">🟡 MEDIUM</option>
+                <option value="Hard">🔴 HARD</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>REWARD (XP)</label>
+              <input 
+                type="text" 
+                [(ngModel)]="newMissionReward" 
+                placeholder="e.g. 100 XP"
+                class="pixel-input"
               >
-                {{ mission.joined ? '✓ Joined' : '+ Join' }}
-              </button>
-              @if (mission.joined && isLoggedIn) {
-              <button class="btn-complete" (click)="completeMission(mission.id)">Complete</button>
-              }
-              <button 
-                class="btn-delete" 
-                (click)="deleteMission(mission.id)"
-                title="Delete mission"
-              >
-                ✕
-              </button>
             </div>
           </div>
+
+          <div class="form-actions">
+            <button class="btn-pixel btn-secondary" (click)="resetForm()">RESET</button>
+            <button class="btn-pixel btn-primary" (click)="addMission()">POST QUEST</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+
+  <!-- Missions Grid -->
+  <main class="missions-grid-container">
+    @if (missions().length === 0) {
+      <div class="empty-board pixel-window">
+        <p>THE QUEST BOARD IS EMPTY. BE THE FIRST TO POST A MISSION!</p>
+      </div>
+    } @else {
+      <div class="mission-grid">
+        @for (mission of missions(); track mission.id) {
+          <article class="mission-card-wrapper">
+            <div class="pixel-window" [class.is-joined]="mission.joined">
+              <div class="window-header">
+                <span class="mission-id">#{{ mission.id }}</span>
+                <span class="difficulty-tag" [class]="mission.difficulty.toLowerCase()">
+                  {{ mission.difficulty }}
+                </span>
+                <button class="btn-delete-small" (click)="deleteMission(mission.id)">✕</button>
+              </div>
+              
+              <div class="window-content">
+                <h3 class="mission-title">{{ mission.title }}</h3>
+                <p class="mission-desc">{{ mission.description }}</p>
+                
+                <div class="mission-info-box">
+                  <div class="info-row">
+                    <span class="label">REWARD:</span>
+                    <span class="value reward">{{ mission.reward }}</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="label">POSTED:</span>
+                    <span class="value">{{ formatDate(mission.createdAt) }}</span>
+                  </div>
+                  @if (mission.joined && mission.joinedAt) {
+                    <div class="info-row joined-row">
+                      <span class="label">STATUS:</span>
+                      <span class="value">ACTIVE ({{ formatDate(mission.joinedAt) }})</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="card-actions">
+                  <button 
+                    class="btn-pixel btn-join-toggle"
+                    [class.btn-leave]="mission.joined"
+                    (click)="mission.joined ? leaveMission(mission.id) : joinMission(mission.id)"
+                  >
+                    {{ mission.joined ? 'LEAVE' : 'JOIN' }}
+                  </button>
+                  
+                  @if (mission.joined && isLoggedIn) {
+                    <button class="btn-pixel btn-complete" (click)="completeMission(mission.id)">
+                      COMPLETE
+                    </button>
+                  }
+                </div>
+              </div>
+            </div>
+          </article>
         }
       </div>
     }
-  </div>
+  </main>
 </div>

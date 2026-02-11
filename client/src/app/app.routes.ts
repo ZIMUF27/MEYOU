@@ -11,6 +11,7 @@ import { logoutGuard } from './_guard/logout-guard'
 
 export const routes: Routes = [
     { path: '', component: Home },
+    { path: 'home', redirectTo: '', pathMatch: 'full' },
     { path: 'login', component: Login },
     { path: 'register', component: Register },
     { path: 'mission', component: Mission, canActivate: [authGuard] },

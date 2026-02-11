@@ -1,144 +1,125 @@
-<div class="profile-container">
-  @if (!userProfile()?.display_name) {
-    <!-- CREATION MODE: User needs to set up profile first -->
-    <div class="setup-card">
-      <h2>ตั้งค่าโปรไฟล์ของคุณ</h2>
-      <p class="subtitle">เพื่อเข้าสู่โลกของ The Convergence</p>
+﻿<div class="profile-page">
+  <div class="dashboard-container">
+    <!-- Header Section -->
+    <header class="dashboard-header">
+      <div class="title-group">
+        <h1 class="pixel-title">PILOT DASHBOARD</h1>
+        <div class="system-status">
+          <span class="status-dot"></span>
+          SYSTEM ONLINE
+        </div>
+      </div>
       
-      <div class="avatar-upload-section">
-        <div class="avatar-preview" (click)="triggerFileInput()">
-          @if (previewUrl || userProfile()?.avatar_url) {
-            <img [src]="previewUrl || userProfile()?.avatar_url" alt="Avatar Preview">
-          } @else {
-            <div class="placeholder">
-              <span>+</span>
-              <small>อัปโหลด</small>
+      <div class="mini-profile">
+        <span class="mini-name">{{ userProfile()?.display_name || 'GUEST' }}</span>
+        <img [src]="userProfile()?.avatar_url || 'https://www.w3schools.com/howto/img_avatar.png'" 
+             class="mini-avatar" 
+             (error)="handleImageError($event)">
+      </div>
+    </header>
+
+    <div class="dashboard-grid">
+      <!-- Sidebar: Character Info -->
+      <aside class="dashboard-sidebar">
+        <div class="pixel-box character-card">
+          <div class="avatar-wrapper">
+            <img [src]="previewUrl || userProfile()?.avatar_url || 'https://www.w3schools.com/howto/img_avatar.png'" 
+                 class="main-avatar" 
+                 (error)="handleImageError($event)">
+            
+            <button class="pixel-btn edit-avatar-float" (click)="triggerFileInput()">
+              <mat-icon>photo_camera</mat-icon>
+            </button>
+            <input type="file" id="fileInput" (change)="onAvatarChange($event)" style="display: none" accept="image/*">
+          </div>
+
+          <div class="character-identity">
+            <h2 class="display-name">{{ userProfile()?.display_name || 'UNNAMED PILOT' }}</h2>
+            <div class="level-badge">LEVEL {{ userProfile()?.level || 1 }}</div>
+          </div>
+
+          <div class="quick-edit">
+            <input type="text" 
+                   [(ngModel)]="newNickname" 
+                   placeholder="Update nickname..." 
+                   class="pixel-input"
+                   (keyup.enter)="createOrUpdateProfile()">
+            <button class="pixel-btn btn-save" (click)="createOrUpdateProfile()" [disabled]="uploading()">
+              <mat-icon>{{ uploading() ? 'hourglass_empty' : 'save' }}</mat-icon>
+            </button>
+          </div>
+
+          @if (uploadMessage()) {
+            <div class="message" [class.error]="uploadMessage()?.includes('Error')">
+              {{ uploadMessage() }}
             </div>
           }
         </div>
-        <input type="file" id="fileInput" (change)="onAvatarChange($event)" accept="image/*" hidden>
-        <button type="button" class="btn-secondary" (click)="triggerFileInput()">เปลี่ยนรูปโปรไฟล์</button>
-      </div>
 
-      <div class="form-group">
-        <label>ชื่อเล่น (Nickname)</label>
-        <input type="text" [(ngModel)]="newNickname" placeholder="ระบุชื่อที่ต้องการใช้ในระบบ...">
-      </div>
-
-      <div class="actions">
-        <button class="btn-primary" [disabled]="uploading()" (click)="createOrUpdateProfile()">
-          @if (uploading()) {
-            กำลังบันทึก...
-          } @else {
-            สร้างโปรไฟล์และเริ่มต้น
-          }
-        </button>
-      </div>
-      
-      @if (uploadMessage()) {
-        <div class="message" [class.error]="uploadMessage()?.includes('Error') || uploadMessage()?.includes('ผิดพลาด')">
-          {{ uploadMessage() }}
+        <div class="pixel-box session-card">
+          <button class="pixel-btn btn-secondary" routerLink="/mission">
+            <mat-icon>assignment</mat-icon> VIEW MISSIONS
+          </button>
+          <button class="pixel-btn btn-danger" (click)="logout()">
+            <mat-icon>logout</mat-icon> DISCONNECT
+          </button>
         </div>
-      }
+      </aside>
+
+      <!-- Main Content: Stats & Credentials -->
+      <main class="dashboard-main">
+        <!-- Credentials Section -->
+        <section class="pixel-box section-card">
+          <div class="section-header">
+            <mat-icon>badge</mat-icon>
+            <h3>PILOT CREDENTIALS</h3>
+          </div>
+          <div class="credentials-grid">
+            <div class="credential-item">
+              <span class="label">UNIQUE IDENTIFIER</span>
+              <span class="value code">{{ currentUser()?.uid }}</span>
+            </div>
+            <div class="credential-item">
+              <span class="label">COMMUNICATION LINK</span>
+              <span class="value">{{ currentUser()?.email }}</span>
+            </div>
+            <div class="credential-item">
+              <span class="label">RECRUITMENT DATE</span>
+              <span class="value">{{ formatDate(currentUser()?.metadata?.creationTime) }}</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="pixel-box section-card stats-container">
+          <div class="section-header">
+            <mat-icon>trending_up</mat-icon>
+            <h3>MISSION PROGRESS</h3>
+          </div>
+
+          <div class="xp-bar-wrapper">
+            <div class="xp-header">
+              <span>EXPERIENCE POINTS</span>
+              <span>{{ userProfile()?.xp || 0 }} XP</span>
+            </div>
+            <div class="pixel-progress-bg">
+              <div class="pixel-progress-fill" [style.width.%]="(userProfile()?.xp || 0) % 100"></div>
+            </div>
+          </div>
+
+          <div class="activity-log">
+            <h4>RECENT TELEMETRY</h4>
+            <div class="log-item">
+              <span class="log-time">JUST NOW</span>
+              <span class="log-event">Authorized secure connection</span>
+            </div>
+            <div class="log-item">
+              <span class="log-time">SYSTEM</span>
+              <span class="log-event">XP Telemetry updated</span>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
-  } @else {
-    <!-- VIEW MODE: League of Legends Style -->
-    <div class="league-profile-view">
-      <div class="lp-header">
-        <span class="app-name">THE CONVERGENCE</span>
-        <div class="user-corner">
-           <span class="uc-name">{{ userProfile()?.display_name }}</span>
-           <img class="uc-avatar" [src]="userProfile()?.avatar_url || 'https://www.w3schools.com/howto/img_avatar.png'" (error)="handleImageError($event)">
-        </div>
-      </div>
-
-      <div class="lp-main">
-        <!-- Left Column: Big Avatar & Status -->
-        <div class="lp-left-col">
-           <div class="lp-big-avatar-container">
-              <div class="lp-big-avatar">
-                 <img [src]="userProfile()?.avatar_url || 'https://www.w3schools.com/howto/img_avatar.png'" alt="Avatar" (error)="handleImageError($event)">
-              </div>
-              <button class="edit-avatar-btn" (click)="triggerFileInput()" title="เปลี่ยนรูปโปรไฟล์">
-                ✎
-              </button>
-              <input type="file" id="fileInput" (change)="onAvatarChange($event)" accept="image/*" style="display: none;">
-           </div>
-           
-           <div class="lp-username-big">
-              {{ userProfile()?.display_name }}
-           </div>
-           
-           <div class="lp-level-badge">
-             Level {{ userProfile()?.level || 1 }}
-           </div>
-
-           <div class="lp-status">
-              <span class="status-dot"></span> Active Member
-           </div>
-
-           <!-- Edit Nickname quick input (optional, keeps UI clean if hidden, but useful) -->
-           <div class="edit-name-section">
-             <input type="text" [(ngModel)]="newNickname" placeholder="เปลี่ยนชื่อเล่น..." class="lp-input">
-             <button class="btn-save-small" (click)="createOrUpdateProfile()" [disabled]="uploading()">บันทึก</button>
-           </div>
-           @if (uploadMessage()) {
-              <div class="mini-msg">{{ uploadMessage() }}</div>
-           }
-        </div>
-
-        <!-- Right Column: Info & Stats -->
-        <div class="lp-right-col">
-           <!-- Account Information Section -->
-           <div class="lp-section">
-              <h3>ข้อมูลบัญชี (Account Information)</h3>
-              <div class="lp-grid">
-                 <div class="lp-grid-item">
-                    <label>DISPLAY NAME</label>
-                    <div class="value">{{ userProfile()?.display_name }}</div>
-                 </div>
-                 <div class="lp-grid-item">
-                    <label>USER ID</label>
-                    <div class="value token">{{ currentUser()?.uid }}</div>
-                 </div>
-                 <div class="lp-grid-item">
-                    <label>EMAIL</label>
-                    <div class="value">{{ currentUser()?.email }}</div>
-                 </div>
-                 <div class="lp-grid-item">
-                    <label>MEMBER SINCE</label>
-                    <div class="value">{{ formatDate(userProfile()?.createdAt) }}</div>
-                 </div>
-              </div>
-           </div>
-
-           <!-- Activity Section -->
-           <div class="lp-section">
-              <h3>กิจกรรม (Activity)</h3>
-              <div class="activity-timeline">
-                 <div class="activity-item">
-                    <div class="activity-line"></div>
-                    <div class="activity-content">
-                       <span class="activity-date">Today</span>
-                       <p>เข้าสู่ระบบสำเร็จ (Logged in)</p>
-                    </div>
-                 </div>
-                 <div class="activity-item">
-                    <div class="activity-line"></div>
-                    <div class="activity-content">
-                       <span class="activity-date">XP Progress</span>
-                       <p>Current XP: {{ userProfile()?.xp || 0 }}</p>
-                    </div>
-                 </div>
-              </div>
-           </div>
-           
-           <div class="lp-actions">
-              <button class="btn-back" routerLink="/home">กลับหน้าหลัก (Home)</button>
-              <button class="btn-logout" (click)="auth.logout()">ออกจากระบบ (Logout)</button>
-           </div>
-        </div>
-      </div>
-    </div>
-  }
+  </div>
 </div>
