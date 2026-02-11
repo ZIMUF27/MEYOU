@@ -29,20 +29,19 @@
   border: 6px solid var(--pixel-black);
   box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
   image-rendering: pixelated;
-  
+
   .hero-title {
     font-family: var(--pixel-font-title);
     font-size: 4rem;
-    color: var(--pixel-primary);
+    @include pixel-text-shine(var(--pixel-primary));
     margin-bottom: 1rem;
-    text-shadow: 4px 4px 0 var(--pixel-black);
     letter-spacing: 4px;
-    
+
     @media (max-width: 768px) {
       font-size: 2.5rem;
     }
   }
-  
+
   .hero-subtitle {
     font-family: var(--pixel-font-main);
     font-size: 1.5rem;
@@ -62,11 +61,11 @@
     font-size: 0.9rem;
     padding: 15px 30px;
     box-shadow: 4px 4px 0 var(--pixel-black);
-    
+
     &.btn-primary {
       background-color: var(--pixel-primary);
     }
-    
+
     &.btn-secondary {
       background-color: var(--pixel-secondary);
       color: var(--pixel-black);
@@ -107,16 +106,15 @@
   cursor: pointer;
   padding: 0;
   margin-bottom: 1rem;
-  
+
   h2 {
-    color: var(--pixel-primary);
-    text-shadow: 3px 3px 0 var(--pixel-black);
+    @include pixel-text-shine(var(--pixel-primary));
     margin: 0;
     transition: transform 0.1s steps(2);
-    
+
     &:hover {
       transform: scale(1.05);
-      color: var(--pixel-secondary);
+      // Shine already handles color gradient
     }
   }
 }
@@ -134,14 +132,14 @@
     border: 4px solid var(--pixel-black);
     box-shadow: 6px 6px 0 var(--pixel-black);
     min-width: 200px;
-    
+
     h3 {
       font-family: var(--pixel-font-title);
       font-size: 2rem;
-      color: var(--pixel-secondary);
+      @include pixel-text-shine(var(--pixel-secondary));
       margin-bottom: 0.5rem;
     }
-    
+
     p {
       font-size: 1rem;
       margin: 0;
@@ -152,23 +150,23 @@
 
 .explore-section {
   background-color: var(--pixel-white);
-  
-  h2 { color: var(--pixel-secondary); }
+
+  h2 { @include pixel-text-shine(var(--pixel-secondary)); }
 }
 
 .login-section {
   background-color: var(--pixel-primary);
   color: var(--pixel-white);
   border-bottom: none;
-  
-  h2 { color: var(--pixel-white); text-shadow: 3px 3px 0 var(--pixel-black); }
+
+  h2 { @include pixel-text-shine(var(--pixel-white)); }
   p { color: var(--pixel-white); }
-  
+
   .btn-primary {
     background-color: var(--pixel-tertiary);
     color: var(--pixel-black);
     text-shadow: none;
-    
+
     &:hover {
       background-color: var(--pixel-white);
     }

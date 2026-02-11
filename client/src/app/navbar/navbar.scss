@@ -15,14 +15,13 @@
   .logo {
     font-family: var(--pixel-font-title);
     font-size: 1rem;
-    color: var(--pixel-primary);
-    text-shadow: 2px 2px 0 var(--pixel-black);
+    @include pixel-text-shine(var(--pixel-primary));
     text-decoration: none;
     letter-spacing: 1px;
 
     &:hover {
-      color: var(--pixel-secondary);
       transform: scale(1.05);
+      // Shine already handles color gradient
     }
   }
 
@@ -61,7 +60,7 @@
 
       .user-icon { font-size: 1.1rem; }
       .username { font-family: var(--pixel-font-title); font-size: 0.6rem; margin-left: 5px; }
-      
+
       &:hover {
         background-color: var(--pixel-tertiary);
       }
@@ -91,11 +90,11 @@
         transition: all 0.1s;
 
         &:last-child { border-bottom: none; }
-        &:hover { 
-          background-color: var(--pixel-primary); 
+        &:hover {
+          background-color: var(--pixel-primary);
           color: var(--pixel-white);
           padding-left: 1.2rem;
-        }   
+        }
       }
     }
   }

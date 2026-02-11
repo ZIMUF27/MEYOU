@@ -64,3 +64,25 @@
     box-shadow: 0 0 0 0 var(--pixel-black);
   }
 }
+
+@mixin pixel-text-shine($color: var(--pixel-primary)) {
+  position: relative;
+  display: inline-block;
+  color: $color;
+  background: linear-gradient(
+    to right,
+    $color 20%,
+    rgba(255, 255, 255, 0.8) 50%,
+    $color 80%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: pixel-text-shine-anim 4s linear infinite;
+  filter: drop-shadow(4px 4px 0 var(--pixel-black));
+}
+
+@keyframes pixel-text-shine-anim {
+  from { background-position: -200% center; }
+  to { background-position: 200% center; }
+}
