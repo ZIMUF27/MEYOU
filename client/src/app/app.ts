@@ -1,16 +1,16 @@
-import { Component, signal } from '@angular/core'
-import { RouterOutlet } from '@angular/router'
+import { Component, signal } from "@angular/core"
+import { RouterOutlet } from "@angular/router"
 import { Navbar } from "./navbar/navbar"
-import { HttpClientModule } from '@angular/common/http'
-import { NgxSpinnerComponent } from 'ngx-spinner';
+import { HttpClientModule } from "@angular/common/http"
+import { NgxSpinnerComponent } from "ngx-spinner";
+import { NotificationComponent } from "./_shared/notification/notification";
 
 @Component({
-  selector: 'app-root',
-  imports: [HttpClientModule, RouterOutlet, Navbar, NgxSpinnerComponent],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  selector: "app-root",
+  imports: [HttpClientModule, RouterOutlet, Navbar, NgxSpinnerComponent, NotificationComponent],
+  templateUrl: "./app.html",
+  styleUrl: "./app.scss"
 })
 export class App {
-  protected readonly title = signal('client');
+  protected readonly title = signal("client");
 }
-

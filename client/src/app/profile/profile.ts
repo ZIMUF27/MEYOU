@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService, Profile } from '../_services/auth-service';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { NotificationService } from '../_services/notification.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class ProfileComponent {
   auth = inject(AuthService);
   router = inject(Router);
+  notification = inject(NotificationService);
 
   // Signals
   currentUser = this.auth.currentUser;
@@ -69,12 +71,11 @@ export class ProfileComponent {
     const nameToSave = this.newNickname.trim() || currentName;
 
     if (!nameToSave) {
-        this.uploadMessage.set('Please set a nickname.');
+        this.notification.showAlert('Please set a nickname.', 'VALIDATION ERROR', 'warning');
         return;
     }
 
     this.uploading.set(true);
-    this.uploadMessage.set(null);
 
     try {
       const uid = this.currentUser()!.uid;
@@ -86,7 +87,7 @@ export class ProfileComponent {
           avatarUrl = await this.auth.uploadUserAvatar(uid, this.selectedFile);
         } catch (err: any) {
           console.error('Upload failed:', err);
-          this.uploadMessage.set('Avatar upload failed. Saving other details...');
+          this.notification.showAlert('Avatar upload failed. Saving other details...', 'UPLOAD WARNING', 'warning');
         }
       }
 
@@ -98,22 +99,31 @@ export class ProfileComponent {
         xp: this.userProfile()?.xp || 0
       });
 
-      this.uploadMessage.set('Profile saved successfully!');
+      this.notification.showAlert('Profile saved successfully!', 'SUCCESS', 'success');
 
       // Clear inputs
       this.selectedFile = null;
       this.newNickname = '';
+      this.previewUrl = null;
 
     } catch (error: any) {
       console.error(error);
-      this.uploadMessage.set('Error: ' + error.message);
+      this.notification.showAlert('Error: ' + error.message, 'SYSTEM ERROR', 'error');
     } finally {
       this.uploading.set(false);
     }
   }
 
-  logout() {
-    if (confirm('Are you sure you want to log out of your account?')) {
+  async logout() {
+    const confirmed = await this.notification.confirm({
+      message: 'Are you sure you want to log out of your account?',
+      title: 'SYSTEM ALERT',
+      type: 'warning',
+      confirmText: 'DISCONNECT',
+      cancelText: 'CANCEL'
+    });
+
+    if (confirmed) {
       this.auth.logout();
     }
   }

@@ -1,0 +1,23 @@
+@if (notification()) {
+  <div class='notification-overlay'>
+    <div class='pixel-box notification-modal' [ngClass]='notification()?.type'>
+      <div class='modal-header'>
+        <mat-icon>{{ icon }}</mat-icon>
+        <span>{{ notification()?.title }}</span>
+      </div>
+      <div class='modal-content'>
+        <p>{{ notification()?.message }}</p>
+        <div class='modal-actions'>
+          @if (notification()?.showCancel) {
+            <button class='pixel-btn btn-cancel' (click)='onCancel()'>
+              {{ notification()?.cancelText }}
+            </button>
+          }
+          <button class='pixel-btn btn-confirm' (click)='onConfirm()'>
+            {{ notification()?.confirmText }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
