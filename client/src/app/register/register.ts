@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
@@ -21,6 +21,7 @@ import { AuthService } from '../_services/auth-service';
   ],
   templateUrl: './register.html',
   styleUrl: './register.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class Register {
   private fb = inject(FormBuilder);
